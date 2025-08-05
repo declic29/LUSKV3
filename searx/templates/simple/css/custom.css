@@ -17,3 +17,31 @@
   margin-left: auto;
   margin-right: auto;
 }
+/* Icône OpenStreetMap sous la barre de recherche */
+.osm-link-box {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.osm-link-box a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--color-custom-osm-text, #2b6cb0);  /* Couleur bleue par défaut, modifiable */
+    transition: opacity 0.2s ease;
+}
+
+.osm-link-box a:hover {
+    opacity: 0.8;
+}
+
+.osm-link-box img {
+    width: 32px;
+    height: 32px;
+}
+
+.osm-link-box .osm-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
