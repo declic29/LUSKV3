@@ -63,6 +63,22 @@
     {% block content %}
     {% endblock %}
   </main>
+
+<div class="osm-link" style="text-align: center; margin: 25px 0;">
+    <a href="https://www.openstreetmap.org/#map=8/52.154/5.295" 
+       title="Voir la carte OpenStreetMap"
+       style="display: inline-block;">
+        <img src="{{ url_for('static', filename='themes/simple/img/osm_logo.png') }}" 
+             alt="OpenStreetMap" 
+             style="width: 40px; height: 40px; vertical-align: middle;">
+        <span style="margin-left: 8px; color: #555; vertical-align: middle;">Carte de Bretagne</span>
+    </a>
+</div>
+        </a>
+    </div>
+    {% endif %}
+
+  
   <footer>
   <p style="text-align:center; font-size: 0.9rem; color: #666; line-height: 1.5;">
     Propulsé par Lusk - 2025.8.3+1e3d818 — Le métamoteur breton & respectueux de la vie privée<br>
