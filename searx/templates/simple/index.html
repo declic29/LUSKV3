@@ -11,7 +11,7 @@
   </div>
   {% include 'simple/simple_search.html' %}
 
-  <!-- Icône OpenStreetMap - Version modifiée -->
+  <!-- Icône OpenStreetMap - Version avec taille ajustée -->
   <div class="osm-container">
     <a href="https://www.openstreetmap.org/#map=8/52.154/5.295" 
        title="Carte OpenStreetMap de Bretagne (nouvel onglet)" 
@@ -33,37 +33,47 @@
 
 {% block extra_js %}
 <style>
-/* Styles pour l'icône OSM */
+/* Styles pour l'icône OSM - Taille augmentée */
 .osm-container {
     text-align: center;
-    margin: 1.5rem 0;
+    margin: 1.8rem 0;
 }
 
 .osm-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.8rem;
     text-decoration: none;
     transition: all 0.2s;
 }
 
 .osm-link:hover {
     opacity: 0.9;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .osm-link img {
-    width: 22px;  /* Taille réduite */
-    height: 22px; /* Taille réduite */
+    width: 28px;  /* Taille augmentée (précédemment 22px) */
+    height: 28px; /* Taille augmentée */
+    transition: transform 0.3s;
+}
+
+.osm-link:hover img {
+    transform: scale(1.1);
 }
 
 .osm-text {
     color: var(--color-lusk-blue, #2b6cb0);
     font-weight: 500;
-    font-size: 0.85rem; /* Texte plus petit */
+    font-size: 0.9rem;
+    transition: color 0.2s;
 }
 
-/* Styles des vignettes carrées */
+.osm-link:hover .osm-text {
+    color: #1a4f8b;
+}
+
+/* Styles des vignettes d'actualités */
 .news-card {
     display: flex;
     flex-direction: column;
@@ -150,6 +160,11 @@
     #news-results {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 15px;
+    }
+    
+    .osm-link img {
+        width: 24px;
+        height: 24px;
     }
 }
 </style>
