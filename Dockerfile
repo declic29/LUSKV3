@@ -1,5 +1,5 @@
 # --------- Étape 1 : Builder pour SearXNG ---------
-FROM python:3.11-slim as builder
+FROM python:3.13-slim as builder
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -17,7 +17,7 @@ WORKDIR ${SEARXNG_SRC}
 RUN pip install --upgrade pip setuptools && pip install .
 
 # --------- Étape 2 : Builder pour LibreTranslate ---------
-FROM python:3.11-slim as lt-builder
+FROM python:3.13-slim as lt-builder
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -29,7 +29,7 @@ RUN pip install --upgrade pip && \
     pip install libretranslate==1.3.9
 
 # --------- Étape 3 : Image finale ---------
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 ENV SEARXNG_SRC=/usr/local/searxng
 ENV INSTANCE_NAME="lusk.bzh"
