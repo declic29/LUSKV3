@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  lusk:
+    build: .
+    container_name: lusk
+    restart: unless-stopped
+    ports:
+      - "8080:8080"  # Port pour SearXNG
+      - "5000:5000"  # Port pour LibreTranslate
+    environment:
+      - SEARXNG_BASE_URL=https://${YOUR_DOMAIN}  # Remplacez par votre domaine
+      - LT_API_KEY=${LT_API_KEY}                  # Clé secrète pour l'API
+      - SEARX_PORT=8080
+      - LT_PORT=5000
+    volumes:
+      - ./searxng:/etc/searxng  # Persistance des configurations
