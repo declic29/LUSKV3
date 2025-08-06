@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="index">
+  <!-- En-tête -->
   <div class="logo-container" style="text-align: center;">
     <img src="/static/themes/simple/img/logolusk240.png" alt="Lusk.bzh" class="logo-lusk">
   </div>
@@ -9,9 +10,11 @@
     <h1>Lusk.bzh</h1>
     <p class="subtitle">Ce que vous cherchez ne regarde que vous.</p>
   </div>
+
+  <!-- Barre de recherche -->
   {% include 'simple/simple_search.html' %}
 
-  <!-- Triple icône : Brezhoneg - OpenStreetMap - Traduction -->
+  <!-- Triple icône -->
   <div class="icons-container">
     <!-- Icône Brezhoneg.bzh -->
     <div class="icon-container">
@@ -55,7 +58,7 @@
     </div>
   </div>
 
-  <!-- Widget de traduction (caché par défaut) -->
+  <!-- Widget de traduction -->
   <div id="translate-widget" class="translate-widget">
     <div class="translate-header">
       <h3>Traduction Brezhoneg ↔ Français</h3>
@@ -98,286 +101,60 @@
 
 {% block extra_js %}
 <style>
-/* Styles pour les icônes */
-.icons-container {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin: 2rem 0;
-    flex-wrap: wrap;
-}
-
-.icon-container {
-    text-align: center;
-    flex: 1;
-    min-width: 100px;
-    max-width: 150px;
-}
-
-.icon-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-    transition: all 0.2s;
-    padding: 0.5rem;
-    border-radius: 8px;
-    flex-direction: column;
-}
-
-.icon-link:hover {
-    background: rgba(0,0,0,0.03);
-    transform: translateY(-2px);
-}
-
-.icon-img {
-    width: 28px;
-    height: 28px;
-    transition: transform 0.3s;
-}
-
-.icon-link:hover .icon-img {
-    transform: scale(1.1);
-}
-
-.icon-text {
-    color: var(--color-lusk-blue, #2b6cb0);
-    font-weight: 500;
-    font-size: 0.85rem;
-    transition: color 0.2s;
-    margin-top: 0.3rem;
-}
-
-/* Styles du widget de traduction */
-.translate-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 90%;
-    max-width: 800px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    z-index: 1000;
-    transform: translateY(150%);
-    transition: transform 0.3s ease;
-    display: none;
-}
-
-.translate-widget.active {
-    transform: translateY(0);
-    display: block;
-}
-
-.translate-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background: #2b6cb0;
-    color: white;
-    border-radius: 10px 10px 0 0;
-}
-
-.translate-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.translate-body {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 15px;
-    gap: 15px;
-}
-
-.translate-column {
-    flex: 1;
-    min-width: 250px;
-}
-
-.lang-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.translate-controls {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-    align-self: center;
-}
-
-.swap-btn {
-    background: #f0f0f0;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.swap-btn:hover {
-    background: #e0e0e0;
-    transform: rotate(180deg);
-}
-
-.action-btn {
-    background: #2b6cb0;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.action-btn:hover {
-    background: #1a4f8b;
-}
-
-textarea {
-    width: 100%;
-    height: 120px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    resize: none;
-}
-
-/* Styles existants pour les actualités */
-.news-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    color: inherit;
-    background: white;
-}
-
-/* ... (conservez vos styles existants pour les actualités) ... */
-
-/* Responsive */
-@media (max-width: 768px) {
-    .icons-container {
-        gap: 1rem;
-    }
-    
-    .icon-container {
-        min-width: 80px;
-    }
-    
-    .icon-img {
-        width: 24px;
-        height: 24px;
-    }
-    
-    .icon-text {
-        font-size: 0.75rem;
-    }
-    
-    .translate-widget {
-        width: 95%;
-        right: 10px;
-        bottom: 10px;
-    }
-    
-    .translate-body {
-        flex-direction: column;
-    }
-    
-    .translate-controls {
-        flex-direction: row;
-        margin: 10px 0;
-    }
-    
-    .swap-btn {
-        transform: rotate(90deg);
-    }
-}
+/* [Vos styles CSS existants ici...] */
 </style>
 
 <script>
 // Gestion du widget de traduction
 document.addEventListener('DOMContentLoaded', function() {
-    // Elements du widget
-    const widget = document.getElementById('translate-widget');
-    const trigger = document.getElementById('translate-trigger');
-    const closeBtn = document.getElementById('close-translate');
+    // [Code du widget de traduction ici...]
     
-    // Ouvrir le widget
-    trigger.addEventListener('click', function(e) {
-        e.preventDefault();
-        widget.classList.add('active');
-    });
-    
-    // Fermer le widget
-    closeBtn.addEventListener('click', function() {
-        widget.classList.remove('active');
-    });
-    
-    // Traduction
-    document.getElementById('translate-btn').addEventListener('click', async function() {
-        const sourceText = document.getElementById('source-text').value;
-        const sourceLang = document.getElementById('source-lang').value;
-        const targetLang = document.getElementById('target-lang').value;
-        
-        if (!sourceText.trim()) return;
-        
-        document.getElementById('target-text').value = "Traduction en cours...";
-        
-        try {
-            const response = await fetch('http://localhost:5000/translate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    q: sourceText,
-                    source: sourceLang,
-                    target: targetLang
-                })
-            });
-            
-            const data = await response.json();
-            document.getElementById('target-text').value = data.translatedText || "Erreur de traduction";
-        } catch (error) {
-            document.getElementById('target-text').value = "Service indisponible";
-            console.error("Erreur:", error);
-        }
-    });
-    
-    // Échange des langues
-    document.getElementById('swap-lang').addEventListener('click', function() {
-        const source = document.getElementById('source-lang');
-        const target = document.getElementById('target-lang');
-        [source.value, target.value] = [target.value, source.value];
-    });
-
-    // Code existant pour les actualités
+    // Code pour les actualités (FONCTIONNEL)
     const apiKey = '2a28af6c4ebc58d5beba1fc150c105eb';
+    
+    function fetchNews(apiKey) {
+        const container = document.getElementById('news-results');
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center;">
+                <div class="news-loader"></div>
+                <p>Chargement des actualités...</p>
+            </div>
+        `;
+
+        fetch(`https://gnews.io/api/v4/search?q=Bretagne&token=${apiKey}&lang=fr&max=8`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.articles && data.articles.length > 0) {
+                    container.innerHTML = data.articles.map(article => `
+                        <a href="${article.url}" target="_blank" rel="noopener" class="news-card">
+                            <div class="news-image-container">
+                                ${article.image ? `
+                                <img src="${article.image}" 
+                                     alt="${article.title}" 
+                                     class="news-image"
+                                     loading="lazy">` 
+                                : '<div class="news-image-placeholder"></div>'}
+                            </div>
+                            <div class="news-content">
+                                <h3>${article.title}</h3>
+                                <p>${article.description?.substring(0, 80) || ''}...</p>
+                                <time>${new Date(article.publishedAt).toLocaleDateString('fr-FR')}</time>
+                            </div>
+                        </a>
+                    `).join('');
+                } else {
+                    container.innerHTML = '<p style="grid-column:1/-1; text-align:center">Aucune actualité disponible</p>';
+                }
+            })
+            .catch(() => {
+                container.innerHTML = '<p style="grid-column:1/-1; text-align:center">Service indisponible</p>';
+            });
+    }
+
+    // Démarrer le chargement des actualités
     if (apiKey) fetchNews(apiKey);
 });
-
-function fetchNews(apiKey) {
-    // ... (conservez votre code existant pour les actualités) ...
-}
 </script>
 {% endblock %}
