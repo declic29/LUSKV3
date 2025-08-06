@@ -11,19 +11,38 @@
   </div>
   {% include 'simple/simple_search.html' %}
 
-  <!-- Icône OpenStreetMap - Version avec taille ajustée -->
-  <div class="osm-container">
-    <a href="https://www.openstreetmap.org/#map=8/52.154/5.295" 
-       title="Carte OpenStreetMap de Bretagne (nouvel onglet)" 
-       class="osm-link"
-       target="_blank"
-       rel="noopener noreferrer">
-        <img src="{{ url_for('static', filename='themes/simple/img/osm_logo.png') }}" alt="OSM">
-        <span class="osm-text">Carte de Bretagne</span>
-    </a>
+  <!-- Double icône Brezhoneg + OpenStreetMap -->
+  <div class="dual-icons-container">
+    <!-- Icône Brezhoneg.bzh -->
+    <div class="icon-container">
+      <a href="https://www.fr.brezhoneg.bzh/#:~:text=Le%20site%20officiel%20de%20l'Office%20public%20de%20la,de%20la%20langue%2C%20trouver%20un%20cours%20de%20"
+         title="Office public de la langue bretonne"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="icon-link">
+        <img src="{{ url_for('static', filename='themes/simple/img/brezhoneg_logo.png') }}" 
+             alt="Brezhoneg.bzh" 
+             class="icon-img">
+        <span class="icon-text">Langue bretonne</span>
+      </a>
+    </div>
+    
+    <!-- Icône OpenStreetMap -->
+    <div class="icon-container">
+      <a href="https://www.openstreetmap.org/#map=8/52.154/5.295" 
+         title="Carte OpenStreetMap de Bretagne" 
+         target="_blank"
+         rel="noopener noreferrer"
+         class="icon-link">
+        <img src="{{ url_for('static', filename='themes/simple/img/osm_logo.png') }}" 
+             alt="OSM" 
+             class="icon-img">
+        <span class="icon-text">Carte de Bretagne</span>
+      </a>
+    </div>
   </div>
   
-  <!-- Module d'actualités avec vignettes carrées -->
+  <!-- Module d'actualités -->
   <div id="news-container" style="margin: 30px auto; max-width: 900px;">
     <h2 style="text-align: center; margin-bottom: 25px; font-size: 1.5rem;">Actualités</h2>
     <div id="news-results" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 0 15px;"></div>
@@ -33,47 +52,72 @@
 
 {% block extra_js %}
 <style>
-/* Styles pour l'icône OSM - Taille augmentée */
-.osm-container {
-    text-align: center;
-    margin: 1.8rem 0;
+/* Styles pour les icônes jumelles */
+.dual-icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
 }
 
-.osm-link {
+.icon-container {
+    text-align: center;
+}
+
+.icon-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.7rem;
     text-decoration: none;
     transition: all 0.2s;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
 }
 
-.osm-link:hover {
-    opacity: 0.9;
+.icon-link:hover {
+    background: rgba(0,0,0,0.03);
     transform: translateY(-2px);
 }
 
-.osm-link img {
-    width: 28px;  /* Taille augmentée (précédemment 22px) */
-    height: 28px; /* Taille augmentée */
+.icon-img {
+    width: 28px;
+    height: 28px;
     transition: transform 0.3s;
 }
 
-.osm-link:hover img {
+.icon-link:hover .icon-img {
     transform: scale(1.1);
 }
 
-.osm-text {
+.icon-text {
     color: var(--color-lusk-blue, #2b6cb0);
     font-weight: 500;
     font-size: 0.9rem;
     transition: color 0.2s;
 }
 
-.osm-link:hover .osm-text {
+.icon-link:hover .icon-text {
     color: #1a4f8b;
 }
 
-/* Styles des vignettes d'actualités */
+/* Responsive */
+@media (max-width: 600px) {
+    .dual-icons-container {
+        gap: 1rem;
+    }
+    
+    .icon-img {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .icon-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* (Conserver ici tous vos styles existants pour les actualités) */
 .news-card {
     display: flex;
     flex-direction: column;
@@ -87,131 +131,18 @@
     background: white;
 }
 
-.news-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-}
-
-.news-image-container {
-    position: relative;
-    width: 100%;
-    padding-top: 100%;
-    overflow: hidden;
-}
-
-.news-image, .news-image-placeholder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.news-image-placeholder {
-    background: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.news-content {
-    padding: 12px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.news-content h3 {
-    margin: 0 0 8px 0;
-    font-size: 0.95rem;
-    line-height: 1.3;
-}
-
-.news-content p {
-    margin: 0 0 8px 0;
-    font-size: 0.8rem;
-    color: #555;
-    flex-grow: 1;
-}
-
-.news-content time {
-    font-size: 0.75rem;
-    color: #888;
-}
-
-.news-loader {
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #3498db;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-    #news-results {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 15px;
-    }
-    
-    .osm-link img {
-        width: 24px;
-        height: 24px;
-    }
-}
+/* ... (autres styles existants) ... */
 </style>
 
 <script>
+// (Conserver ici tout votre JavaScript existant)
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = '2a28af6c4ebc58d5beba1fc150c105eb';
     if (apiKey) fetchNews(apiKey);
 });
 
 function fetchNews(apiKey) {
-    const container = document.getElementById('news-results');
-    if (!container) return;
-    
-    container.innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center;">
-            <div class="news-loader"></div>
-            <p>Chargement des actualités...</p>
-        </div>
-    `;
-
-    fetch(`https://gnews.io/api/v4/search?q=Bretagne&token=${apiKey}&lang=fr&max=8`)
-        .then(response => response.json())
-        .then(data => {
-            container.innerHTML = data.articles?.length > 0 
-                ? data.articles.map(article => `
-                    <a href="${article.url}" target="_blank" rel="noopener" class="news-card">
-                        <div class="news-image-container">
-                            ${article.image ? `
-                            <img src="${article.image}" 
-                                 alt="${article.title}" 
-                                 class="news-image"
-                                 loading="lazy">` 
-                            : '<div class="news-image-placeholder"></div>'}
-                        </div>
-                        <div class="news-content">
-                            <h3>${article.title}</h3>
-                            <p>${article.description?.substring(0, 80) || ''}...</p>
-                            <time>${new Date(article.publishedAt).toLocaleDateString('fr-FR')}</time>
-                        </div>
-                    </a>
-                `).join('') 
-                : '<p style="grid-column:1/-1; text-align:center">Aucune actualité disponible</p>';
-        })
-        .catch(() => {
-            container.innerHTML = '<p style="grid-column:1/-1; text-align:center">Service indisponible</p>';
-        });
+    // ... (votre code existant) ...
 }
 </script>
 {% endblock %}
