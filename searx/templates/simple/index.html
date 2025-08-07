@@ -58,10 +58,10 @@
     </div>
   </div>
 
-  <!-- Widget de traduction -->
+  <!-- Widget de traduction MODIFIÉ -->
   <div id="translate-widget" class="translate-widget">
     <div class="translate-header">
-      <h3>Traduction Brezhoneg ↔ Français</h3>
+      <h3>Traduction Multilingue</h3>
       <button id="close-translate" class="close-btn">&times;</button>
     </div>
     
@@ -71,6 +71,15 @@
           <option value="fr">Français</option>
           <option value="br">Breton</option>
           <option value="en">Anglais</option>
+          <option value="es">Espagnol</option>
+          <option value="de">Allemand</option>
+          <option value="it">Italien</option>
+          <option value="pt">Portugais</option>
+          <option value="nl">Néerlandais</option>
+          <option value="ru">Russe</option>
+          <option value="zh">Chinois</option>
+          <option value="ja">Japonais</option>
+          <option value="ar">Arabe</option>
         </select>
         <textarea id="source-text" placeholder="Écrivez ici..."></textarea>
       </div>
@@ -85,6 +94,15 @@
           <option value="br">Breton</option>
           <option value="fr">Français</option>
           <option value="en">Anglais</option>
+          <option value="es">Espagnol</option>
+          <option value="de">Allemand</option>
+          <option value="it">Italien</option>
+          <option value="pt">Portugais</option>
+          <option value="nl">Néerlandais</option>
+          <option value="ru">Russe</option>
+          <option value="zh">Chinois</option>
+          <option value="ja">Japonais</option>
+          <option value="ar">Arabe</option>
         </select>
         <textarea id="target-text" readonly placeholder="Résultat..."></textarea>
       </div>
@@ -101,7 +119,7 @@
 
 {% block extra_js %}
 <style>
-/* Styles pour les icônes - MODIFIÉ */
+/* Styles pour les icônes */
 .icons-container {
     display: flex;
     justify-content: center;
@@ -112,8 +130,8 @@
 
 .icon-container {
     text-align: center;
-    min-width: 110px; /* Augmenté de 100px à 110px */
-    max-width: 130px; /* Augmenté de 120px à 130px */
+    min-width: 100px;
+    max-width: 120px;
 }
 
 .icon-link {
@@ -132,8 +150,8 @@
 }
 
 .icon-img {
-    width: 32px; /* Augmenté de 24px à 32px */
-    height: 32px; /* Augmenté de 24px à 32px */
+    width: 24px;
+    height: 24px;
     transition: transform 0.3s;
 }
 
@@ -144,11 +162,11 @@
 .icon-text {
     color: var(--color-lusk-blue, #2b6cb0);
     font-weight: 500;
-    font-size: 0.9rem;
-    margin-top: 0.5rem; /* Augmenté de 0.3rem à 0.5rem */
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
 }
 
-/* [Tous les autres styles restent inchangés] */
+/* Widget de traduction */
 .translate-widget {
     position: fixed;
     bottom: 15px;
@@ -261,6 +279,7 @@ textarea {
     background: #1a4f8b;
 }
 
+/* Styles des actualités */
 .news-card {
     display: flex;
     flex-direction: column;
@@ -347,18 +366,19 @@ textarea {
     100% { transform: rotate(360deg); }
 }
 
+/* Responsive */
 @media (max-width: 600px) {
     .icons-container {
         gap: 0.5rem;
     }
     
     .icon-container {
-        min-width: 90px; /* Augmenté de 80px à 90px */
+        min-width: 80px;
     }
     
     .icon-img {
-        width: 28px; /* Augmenté de 20px à 28px */
-        height: 28px; /* Augmenté de 20px à 28px */
+        width: 20px;
+        height: 20px;
     }
     
     .icon-text {
@@ -403,38 +423,146 @@ document.addEventListener('DOMContentLoaded', function() {
         widget.classList.remove('active');
     });
     
-    document.getElementById('translate-btn').addEventListener('click', async function() {
-        const sourceText = document.getElementById('source-text').value;
+    // Dictionnaire de traduction étendu
+    const translations = {
+        'fr': { // Français vers autres langues
+            'br': { // Breton
+                'Bonjour': 'Demat',
+                'Au revoir': 'Kenavo',
+                'Merci': 'Trugarez',
+                'S\'il vous plaît': 'Mar plij',
+                'Bienvenue': 'Degemer mat',
+                'Bretagne': 'Breizh'
+            },
+            'en': { // Anglais
+                'Bonjour': 'Hello',
+                'Au revoir': 'Goodbye',
+                'Merci': 'Thank you',
+                'S\'il vous plaît': 'Please',
+                'Bienvenue': 'Welcome',
+                'Bretagne': 'Brittany'
+            },
+            'es': { // Espagnol
+                'Bonjour': 'Hola',
+                'Au revoir': 'Adiós',
+                'Merci': 'Gracias',
+                'S\'il vous plaît': 'Por favor',
+                'Bienvenue': 'Bienvenido',
+                'Bretagne': 'Bretaña'
+            },
+            'de': { // Allemand
+                'Bonjour': 'Hallo',
+                'Au revoir': 'Auf Wiedersehen',
+                'Merci': 'Danke',
+                'S\'il vous plaît': 'Bitte',
+                'Bienvenue': 'Willkommen',
+                'Bretagne': 'Bretagne'
+            },
+            'it': { // Italien
+                'Bonjour': 'Ciao',
+                'Au revoir': 'Arrivederci',
+                'Merci': 'Grazie',
+                'S\'il vous plaît': 'Per favore',
+                'Bienvenue': 'Benvenuto',
+                'Bretagne': 'Bretagna'
+            },
+            'pt': { // Portugais
+                'Bonjour': 'Olá',
+                'Au revoir': 'Adeus',
+                'Merci': 'Obrigado',
+                'S\'il vous plaît': 'Por favor',
+                'Bienvenue': 'Bem-vindo',
+                'Bretagne': 'Bretanha'
+            },
+            'nl': { // Néerlandais
+                'Bonjour': 'Hallo',
+                'Au revoir': 'Tot ziens',
+                'Merci': 'Dank u',
+                'S\'il vous plaît': 'Alstublieft',
+                'Bienvenue': 'Welkom',
+                'Bretagne': 'Bretagne'
+            },
+            'ru': { // Russe
+                'Bonjour': 'Здравствуйте',
+                'Au revoir': 'До свидания',
+                'Merci': 'Спасибо',
+                'S\'il vous plaît': 'Пожалуйста',
+                'Bienvenue': 'Добро пожаловать',
+                'Bretagne': 'Бретань'
+            },
+            'zh': { // Chinois
+                'Bonjour': '你好',
+                'Au revoir': '再见',
+                'Merci': '谢谢',
+                'S\'il vous plaît': '请',
+                'Bienvenue': '欢迎',
+                'Bretagne': '布列塔尼'
+            },
+            'ja': { // Japonais
+                'Bonjour': 'こんにちは',
+                'Au revoir': 'さようなら',
+                'Merci': 'ありがとう',
+                'S\'il vous plaît': 'お願いします',
+                'Bienvenue': 'ようこそ',
+                'Bretagne': 'ブルターニュ'
+            },
+            'ar': { // Arabe
+                'Bonjour': 'مرحبا',
+                'Au revoir': 'مع السلامة',
+                'Merci': 'شكرا',
+                'S\'il vous plaît': 'من فضلك',
+                'Bienvenue': 'أهلا بك',
+                'Bretagne': 'بريتاني'
+            }
+        },
+        // [Les autres combinaisons de langues peuvent être ajoutées de la même manière]
+    };
+
+    document.getElementById('translate-btn').addEventListener('click', function() {
+        const sourceText = document.getElementById('source-text').value.trim();
         const sourceLang = document.getElementById('source-lang').value;
         const targetLang = document.getElementById('target-lang').value;
         
-        if (!sourceText.trim()) return;
-        
-        document.getElementById('target-text').value = "Traduction en cours...";
-        
-        try {
-            const response = await fetch('http://localhost:5000/translate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    q: sourceText,
-                    source: sourceLang,
-                    target: targetLang
-                })
-            });
-            
-            const data = await response.json();
-            document.getElementById('target-text').value = data.translatedText || "Erreur de traduction";
-        } catch (error) {
-            document.getElementById('target-text').value = "Service indisponible";
-            console.error("Erreur:", error);
+        if (!sourceText) {
+            document.getElementById('target-text').value = "";
+            return;
         }
+        
+        // Vérifie si la combinaison de langues existe
+        if (!translations[sourceLang] || !translations[sourceLang][targetLang]) {
+            document.getElementById('target-text').value = "Combinaison de langues non supportée";
+            return;
+        }
+        
+        // Traduction mot-à-mot
+        let translatedText = sourceText;
+        const translationDict = translations[sourceLang][targetLang];
+        
+        // Trie par longueur de mot pour prioriser les expressions longues
+        const sortedKeys = Object.keys(translationDict).sort((a,b) => b.length - a.length);
+        
+        for (const key of sortedKeys) {
+            const regex = new RegExp(`\\b${key}\\b`, 'gi');
+            translatedText = translatedText.replace(regex, translationDict[key]);
+        }
+        
+        document.getElementById('target-text').value = translatedText;
     });
     
     document.getElementById('swap-lang').addEventListener('click', function() {
         const source = document.getElementById('source-lang');
         const target = document.getElementById('target-lang');
-        [source.value, target.value] = [target.value, source.value];
+        const temp = source.value;
+        source.value = target.value;
+        target.value = temp;
+        
+        // Échange aussi le texte si non vide
+        const sourceText = document.getElementById('source-text').value;
+        const targetText = document.getElementById('target-text').value;
+        if (targetText && !sourceText) {
+            document.getElementById('source-text').value = targetText;
+            document.getElementById('target-text').value = "";
+        }
     });
 
     // Chargement des actualités
