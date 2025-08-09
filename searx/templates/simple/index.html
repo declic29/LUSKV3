@@ -83,7 +83,26 @@
         </select>
         <textarea id="source-text" placeholder="Écrivez ici..."></textarea>
       </div>
-      
+     function createBidirectionalTranslations(baseTranslations) {
+    const result = {...baseTranslations};
+    for (const [sourceLang, targets] of Object.entries(baseTranslations)) {
+        for (const [targetLang, translations] of Object.entries(targets)) {
+            if (!result[targetLang]) result[targetLang] = {};
+            result[targetLang][sourceLang] = Object.fromEntries(
+                Object.entries(translations).map(([k, v]) => [v, k])
+        }
+    }
+    return result;
+}
+
+const translations = createBidirectionalTranslations({
+    'fr': {
+        'br': { /* ... */ },
+        'en': { /* ... */ }
+        // ...
+    }
+    // ...
+}); 
       <div class="translate-controls">
         <button id="swap-lang" class="swap-btn" title="Échanger les langues">⇄</button>
         <button id="translate-btn" class="action-btn">Traduire</button>
