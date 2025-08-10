@@ -109,10 +109,16 @@
     </div>
   </div>
   
-  <!-- Module d'actualités -->
+  <!-- Module d'actualités amélioré -->
   <div id="news-container" style="margin: 30px auto; max-width: 900px;">
-    <h2 style="text-align: center; margin-bottom: 25px; font-size: 1.5rem;">Actualités</h2>
+    <div class="news-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 15px;">
+      <h2 style="margin: 0; font-size: 1.5rem;">Actualités de Bretagne</h2>
+      <button id="refresh-news" class="action-btn" style="padding: 5px 10px; font-size: 0.8rem;">
+        <span id="refresh-icon">⟳</span> Actualiser
+      </button>
+    </div>
     <div id="news-results" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 0 15px;"></div>
+    <div id="news-error" style="text-align: center; margin-top: 10px; color: #d9534f; display: none;"></div>
   </div>
 </div>
 {% endblock %}
@@ -260,11 +266,10 @@ textarea {
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.2s;
-    display: flex; /* Ajouté */
-    justify-content: center; /* Ajouté */
-    align-items: center; /* Ajouté */
-    margin: 0 auto; /* Centre le bouton dans son conteneur */
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .swap-btn:hover {
@@ -286,7 +291,7 @@ textarea {
     background: #1a4f8b;
 }
 
-/* Styles des actualités */
+/* Styles des actualités améliorés */
 .news-card {
     display: flex;
     flex-direction: column;
@@ -308,7 +313,7 @@ textarea {
 .news-image-container {
     position: relative;
     width: 100%;
-    padding-top: 100%;
+    padding-top: 56.25%; /* Format 16:9 */
     overflow: hidden;
 }
 
@@ -319,6 +324,11 @@ textarea {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.news-card:hover .news-image {
+    transform: scale(1.05);
 }
 
 .news-image-placeholder {
@@ -331,31 +341,35 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #777;
+    font-size: 0.8rem;
 }
 
 .news-content {
-    padding: 10px;
+    padding: 12px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
 .news-content h3 {
-    margin: 0 0 6px 0;
-    font-size: 0.9rem;
+    margin: 0 0 8px 0;
+    font-size: 0.95rem;
     line-height: 1.3;
+    color: #333;
 }
 
 .news-content p {
-    margin: 0 0 6px 0;
+    margin: 0 0 8px 0;
     font-size: 0.8rem;
     color: #555;
     flex-grow: 1;
 }
 
 .news-content time {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: #777;
+    align-self: flex-end;
 }
 
 .news-loader {
@@ -371,6 +385,16 @@ textarea {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Animation de rafraîchissement */
+@keyframes spin-refresh {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.refreshing {
+    animation: spin-refresh 0.7s linear infinite;
 }
 
 /* Responsive */
@@ -411,6 +435,16 @@ textarea {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 12px;
     }
+    
+    .news-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    #refresh-news {
+        align-self: flex-end;
+    }
 }
 </style>
 
@@ -434,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return result;
     }
 
-    // Dictionnaire de base
+    // Dictionnaire de base amélioré avec plus de traductions
     const baseTranslations = {
         'fr': {
             'br': {
@@ -443,7 +477,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Merci': 'Trugarez',
                 'S\'il vous plaît': 'Mar plij',
                 'Bienvenue': 'Degemer mat',
-                'Bretagne': 'Breizh'
+                'Bretagne': 'Breizh',
+                'Comment ça va ?': 'Penaos emañ kont?',
+                'Je m\'appelle': '... eo ma anv',
+                'Où est la gare ?': 'Pelec\'h emañ an ti-gar?',
+                'Je ne comprends pas': 'Ne gomprenan ket'
             },
             'en': {
                 'Bonjour': 'Hello',
@@ -451,7 +489,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Merci': 'Thank you',
                 'S\'il vous plaît': 'Please',
                 'Bienvenue': 'Welcome',
-                'Bretagne': 'Brittany'
+                'Bretagne': 'Brittany',
+                'Comment ça va ?': 'How are you?',
+                'Je m\'appelle': 'My name is',
+                'Où est la gare ?': 'Where is the train station?',
+                'Je ne comprends pas': 'I don\'t understand'
             },
             'es': {
                 'Bonjour': 'Hola',
@@ -459,7 +501,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Merci': 'Gracias',
                 'S\'il vous plaît': 'Por favor',
                 'Bienvenue': 'Bienvenido',
-                'Bretagne': 'Bretaña'
+                'Bretagne': 'Bretaña',
+                'Comment ça va ?': '¿Cómo estás?',
+                'Je m\'appelle': 'Me llamo',
+                'Où est la gare ?': '¿Dónde está la estación de tren?',
+                'Je ne comprends pas': 'No entiendo'
             },
             'de': {
                 'Bonjour': 'Hallo',
@@ -467,7 +513,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Merci': 'Danke',
                 'S\'il vous plaît': 'Bitte',
                 'Bienvenue': 'Willkommen',
-                'Bretagne': 'Bretagne'
+                'Bretagne': 'Bretagne',
+                'Comment ça va ?': 'Wie geht\'s?',
+                'Je m\'appelle': 'Ich heiße',
+                'Où est la gare ?': 'Wo ist der Bahnhof?',
+                'Je ne comprends pas': 'Ich verstehe nicht'
             }
         }
     };
@@ -536,51 +586,106 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Actualités
+    // Actualités améliorées
     const apiKey = '2a28af6c4ebc58d5beba1fc150c105eb';
+    const newsContainer = document.getElementById('news-results');
+    const newsError = document.getElementById('news-error');
+    const refreshBtn = document.getElementById('refresh-news');
+    const refreshIcon = document.getElementById('refresh-icon');
     
-    function fetchNews(apiKey) {
-        const container = document.getElementById('news-results');
-        if (!container) return;
-        
-        container.innerHTML = `
+    function showLoadingState() {
+        newsContainer.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center;">
                 <div class="news-loader"></div>
                 <p>Chargement des actualités...</p>
             </div>
         `;
-
-        fetch(`https://gnews.io/api/v4/search?q=Bretagne&token=${apiKey}&lang=fr&max=8`)
-            .then(response => response.json())
+        newsError.style.display = 'none';
+        refreshIcon.classList.add('refreshing');
+    }
+    
+    function showErrorState(message) {
+        newsContainer.innerHTML = '';
+        newsError.textContent = message;
+        newsError.style.display = 'block';
+        refreshIcon.classList.remove('refreshing');
+    }
+    
+    function renderNews(articles) {
+        if (!articles || articles.length === 0) {
+            showErrorState('Aucune actualité disponible pour le moment');
+            return;
+        }
+        
+        newsContainer.innerHTML = articles.map(article => `
+            <a href="${article.url}" target="_blank" rel="noopener" class="news-card">
+                <div class="news-image-container">
+                    ${article.image ? `
+                    <img src="${article.image}" 
+                         alt="${article.title}" 
+                         class="news-image"
+                         loading="lazy"
+                         onerror="this.parentNode.innerHTML='<div class=\"news-image-placeholder\">Image non disponible</div>'">` 
+                    : '<div class="news-image-placeholder">Image non disponible</div>'}
+                </div>
+                <div class="news-content">
+                    <h3>${article.title || 'Titre non disponible'}</h3>
+                    <p>${article.description ? article.description.substring(0, 80) + '...' : 'Description non disponible'}</p>
+                    <time>${article.publishedAt ? new Date(article.publishedAt).toLocaleDateString('fr-FR') : 'Date inconnue'}</time>
+                </div>
+            </a>
+        `).join('');
+        
+        newsError.style.display = 'none';
+        refreshIcon.classList.remove('refreshing');
+    }
+    
+    function fetchNews() {
+        showLoadingState();
+        
+        fetch(`https://gnews.io/api/v4/search?q=Bretagne OR Breizh&token=${apiKey}&lang=fr&max=8`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur de réseau');
+                }
+                return response.json();
+            })
             .then(data => {
-                if (data.articles && data.articles.length > 0) {
-                    container.innerHTML = data.articles.map(article => `
-                        <a href="${article.url}" target="_blank" rel="noopener" class="news-card">
-                            <div class="news-image-container">
-                                ${article.image ? `
-                                <img src="${article.image}" 
-                                     alt="${article.title}" 
-                                     class="news-image"
-                                     loading="lazy">` 
-                                : '<div class="news-image-placeholder"></div>'}
-                            </div>
-                            <div class="news-content">
-                                <h3>${article.title}</h3>
-                                <p>${article.description?.substring(0, 80) || ''}...</p>
-                                <time>${new Date(article.publishedAt).toLocaleDateString('fr-FR')}</time>
-                            </div>
-                        </a>
-                    `).join('');
+                if (data.articles) {
+                    renderNews(data.articles);
                 } else {
-                    container.innerHTML = '<p style="grid-column:1/-1; text-align:center">Aucune actualité disponible</p>';
+                    showErrorState('Aucune actualité disponible');
                 }
             })
-            .catch(() => {
-                container.innerHTML = '<p style="grid-column:1/-1; text-align:center">Service indisponible</p>';
+            .catch(error => {
+                console.error('Erreur:', error);
+                showErrorState('Service temporairement indisponible');
             });
     }
-
-    if (apiKey) fetchNews(apiKey);
+    
+    // Bouton de rafraîchissement
+    refreshBtn.addEventListener('click', fetchNews);
+    
+    // Chargement initial
+    if (apiKey) {
+        fetchNews();
+    } else {
+        showErrorState('Configuration des actualités manquante');
+    }
+    
+    // Stockage des articles pour une meilleure expérience hors ligne
+    let cachedArticles = [];
+    
+    // Vérification de la connexion
+    function checkOnlineStatus() {
+        if (!navigator.onLine && cachedArticles.length > 0) {
+            renderNews(cachedArticles);
+            showErrorState('Mode hors ligne - Affichage des dernières actualités disponibles');
+        }
+    }
+    
+    window.addEventListener('online', checkOnlineStatus);
+    window.addEventListener('offline', checkOnlineStatus);
 });
 </script>
 {% endblock %}
