@@ -7,24 +7,29 @@
 #brand-lottie {
   width: 180px;
   height: 180px;
-  margin: 0 auto 20px auto; /* 20px d'espace sous le logo */
+  margin: 0 auto; /* centré horizontalement */
 }
 
 /* Logo statique fallback */
 .logo-lusk {
   max-height: 50px;
-  margin: 0 auto 20px auto; /* même espace que le Lottie */
   display: block;
+  margin: 0 auto; /* centré horizontalement */
 }
 
 /* Titre et slogan */
 .custom-title {
   text-align: center;
-  margin-top: 0 !important; /* pas besoin d'espace ici, géré par le logo */
+  margin-top: 0 !important; /* pas de marge supplémentaire */
+  padding-top: 20px; /* espace entre logo et titre */
+}
+
+.custom-title h1 {
+  margin: 0; /* supprime les marges par défaut du navigateur */
 }
 
 .subtitle {
-  margin-top: 30px; /* espace entre le titre et le slogan */
+  margin-top: 10px; /* espace entre titre et slogan */
   font-size: 1em;
   color: #FFC53D;
 }
@@ -34,17 +39,19 @@
   #brand-lottie {
     width: 120px;
     height: 120px;
-    margin-bottom: 15px; /* un peu moins d'espace sur mobile */
   }
 
   .logo-lusk {
     max-height: 40px;
-    margin-bottom: 15px;
+  }
+
+  .custom-title {
+    padding-top: 15px; /* un peu moins d'espace sur mobile */
   }
 
   .subtitle {
-    font-size: 1em;
     margin-top: 8px;
+    font-size: 0.95em;
   }
 }
 
