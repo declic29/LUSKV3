@@ -1,75 +1,78 @@
-/* Titre et slogan */
-.custom-title {
-  margin-top: 0px !important;
+/* Logo animé Lottie */
+.logo-container {
   text-align: center;
+  margin-bottom: 0; /* on gère l'espace avec #brand-lottie */
 }
 
-.subtitle {
-  margin-top: 10px !important; /* espace entre le titre et le slogan */
-  font-size: 1em;
-  color: #FFC53D;
+#brand-lottie {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 20px auto; /* 20px d'espace sous le logo */
 }
 
 /* Logo statique fallback */
 .logo-lusk {
-  max-height: 50px; /* un peu plus petit */
-  margin-top: 10px;
-  margin-bottom: 10px;
+  max-height: 50px;
+  margin: 0 auto 20px auto; /* même espace que le Lottie */
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-/* Logo animé Lottie */
-.logo-container {
+/* Titre et slogan */
+.custom-title {
   text-align: center;
-  margin-bottom: 20px !important; /* espace entre le logo et le titre */
+  margin-top: 0 !important; /* pas besoin d'espace ici, géré par le logo */
 }
 
-#brand-lottie {
-  width: 180px;  
-  height: 180px;
-  margin: 0 auto;
+.subtitle {
+  margin-top: 10px; /* espace entre le titre et le slogan */
+  font-size: 1.1em;
+  color: #FFC53D;
 }
 
 /* Ajustement responsive pour petits écrans */
 @media (max-width: 600px) {
   #brand-lottie {
-    width: 120px;   /* réduit le logo sur mobile */
+    width: 120px;
     height: 120px;
+    margin-bottom: 15px; /* un peu moins d'espace sur mobile */
+  }
+
+  .logo-lusk {
+    max-height: 40px;
+    margin-bottom: 15px;
   }
 
   .subtitle {
-    font-size: 1em; /* réduit légèrement le texte du slogan */
-    margin-top: 4px;
+    font-size: 1em;
+    margin-top: 8px;
   }
 }
 
 /* Icône OpenStreetMap sous la barre de recherche */
 .osm-link-box {
-    text-align: center;
-    margin: 1.5rem 0;
+  text-align: center;
+  margin: 1.5rem 0;
 }
 
 .osm-link-box a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    color: var(--color-custom-osm-text, #2b6cb0);
-    transition: opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--color-custom-osm-text, #2b6cb0);
+  transition: opacity 0.2s ease;
 }
 
 .osm-link-box a:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .osm-link-box img {
-    width: 32px;
-    height: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 .osm-link-box .osm-text {
-    font-size: 0.95rem;
-    font-weight: 500;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
