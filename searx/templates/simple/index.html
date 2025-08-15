@@ -4,7 +4,10 @@
 <div class="index">
   <!-- En-tête -->
   <div class="logo-container" style="text-align: center;">
-    <img src="/static/themes/simple/img/logolusk240.png" alt="Lusk.bzh" class="logo-lusk">
+    <div id="brand-lottie" style="width:240px; height:240px; margin:0 auto;"></div>
+    <noscript>
+      <img src="/static/themes/simple/img/logolusk240.png" alt="Lusk.bzh" class="logo-lusk">
+    </noscript>
   </div>
   <div class="title custom-title" style="text-align: center; margin-top: 10px;">
     <h1>Lusk.bzh</h1>
@@ -124,6 +127,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{{ url_for('static', filename='themes/simple/js/vendor/lottie.min.js') }}"></script>
 <style>
 /* Styles pour les icônes */
 .icons-container {
@@ -450,6 +454,19 @@ textarea {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Logo animé Lottie
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+        lottie.loadAnimation({
+            container: document.getElementById('brand-lottie'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '/static/themes/simple/lottie/logo.json' // chemin vers ton fichier JSON
+        });
+    }
+
+
     // Fonction pour générer les traductions inverses
     function createBidirectionalTranslations(baseTranslations) {
         const result = JSON.parse(JSON.stringify(baseTranslations));
