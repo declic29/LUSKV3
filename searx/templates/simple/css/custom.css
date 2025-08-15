@@ -23,13 +23,26 @@
 /* Logo animé Lottie */
 .logo-container {
   text-align: center;
-  margin-bottom: 30px !important; /* espace entre le logo et le titre */
+  margin-bottom: 20px !important; /* espace entre le logo et le titre */
 }
 
 #brand-lottie {
-  width: 180px;  /* logo plus petit pour l'équilibre */
+  width: 180px;  
   height: 180px;
-  margin: 0 auto; /* centrage horizontal */
+  margin: 0 auto;
+}
+
+/* Ajustement responsive pour petits écrans */
+@media (max-width: 600px) {
+  #brand-lottie {
+    width: 120px;   /* réduit le logo sur mobile */
+    height: 120px;
+  }
+
+  .subtitle {
+    font-size: 1em; /* réduit légèrement le texte du slogan */
+    margin-top: 8px;
+  }
 }
 
 /* Icône OpenStreetMap sous la barre de recherche */
