@@ -1,14 +1,16 @@
+/* Titre et slogan */
 .custom-title {
   margin-top: 0px !important;
   text-align: center;
 }
 
 .subtitle {
-  margin-top: 40px !important;
+  margin-top: 10px !important; /* espace entre le titre et le slogan */
   font-size: 1.1em;
   color: #FFC53D;
 }
 
+/* Logo statique fallback */
 .logo-lusk {
   max-height: 60px;
   margin-top: 10px;
@@ -17,6 +19,19 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Logo animé Lottie */
+.logo-container {
+  text-align: center;
+  margin-bottom: 30px !important; /* espace entre le logo et le titre */
+}
+
+#brand-lottie {
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 0 auto; /* centrage + marges si nécessaire */
+}
+
 /* Icône OpenStreetMap sous la barre de recherche */
 .osm-link-box {
     text-align: center;
@@ -28,7 +43,7 @@
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
-    color: var(--color-custom-osm-text, #2b6cb0);  /* Couleur bleue par défaut, modifiable */
+    color: var(--color-custom-osm-text, #2b6cb0);
     transition: opacity 0.2s ease;
 }
 
