@@ -24,6 +24,15 @@
   padding-top: 20px; /* espace entre logo et titre */
 }
 
+/* Image titre responsive */
+.custom-title img {
+  width: 80%;       /* prend 80% de la largeur dispo */
+  max-width: 400px; /* limite la taille max */
+  height: auto;     /* garde les proportions */
+  display: block;
+  margin: 0 auto;   /* centre horizontalement */
+}
+
 .custom-title h1 {
   margin: 0; /* supprime les marges par défaut du navigateur */
 }
@@ -47,6 +56,11 @@
 
   .custom-title {
     padding-top: 15px; /* un peu moins d'espace sur mobile */
+  }
+
+  .custom-title img {
+    width: 90%;       /* prend un peu plus de place sur mobile */
+    max-width: 250px; /* taille max plus petite */
   }
 
   .subtitle {
