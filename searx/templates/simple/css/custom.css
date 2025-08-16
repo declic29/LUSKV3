@@ -27,7 +27,7 @@
 /* Image titre responsive */
 .custom-title img {
   width: 80%;       /* prend 80% de la largeur dispo */
-  max-width: 400px; /* limite la taille max */
+  max-width: 600px; /* limite la taille max */
   height: auto;     /* garde les proportions */
   display: block;
   margin: 0 auto;   /* centre horizontalement */
