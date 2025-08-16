@@ -60,7 +60,7 @@
 
   .custom-title img {
     width: 90%;       /* prend un peu plus de place sur mobile */
-    max-width: 250px; /* taille max plus petite */
+    max-width: 500px; /* taille max plus petite */
   }
 
   .subtitle {
